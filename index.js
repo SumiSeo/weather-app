@@ -13,8 +13,10 @@ form.addEventListener("submit", (e) => {
 //Global execution means !! What I trigger when I land on the page
 input.addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
+        let search;
         weatherContainer.classList.remove("hidden");
-        bringWeather(e.target.value);
+        search =e.target.value;
+        bringWeather(search);
     }
 })
 
@@ -51,8 +53,11 @@ const getAllTime = (timestamp)=>{
 
 
 /**
- * 
- * @param {query} query 
+ * This query comes from the user input. Once bringWeather function gets query, this function will
+ * mainly call the API and call another function "displayWeather" to get mainDiv.
+ * mainDiv will show all the contents.
+ * Moreover, this query will change the background video depends on the weather.
+ * @param {string} query 
  */
 const bringWeather = (query) => {
     const searchFirst = query.slice(0, 1).toUpperCase();
@@ -61,8 +66,9 @@ const bringWeather = (query) => {
     const xhr = new XMLHttpRequest();
     xhr.open("GET", `https://api.openweathermap.org/data/2.5/forecast?q=${searchFinal}&units=metric&appid=${API_KEY}`);
     xhr.send(null); //This is for "form" to write params
-
-    xhr.addEventListener("load", () => {
+   
+    xhr.addEventListener("readystatechange", () => {
+        if(xhr.status === 200 && xhr.readyState === XMLHttpRequest.DONE) {
         const response = JSON.parse(xhr.responseText);
         const responseList = response.list;
         const videoBG = document.querySelector("video source");
@@ -72,14 +78,18 @@ const bringWeather = (query) => {
         const weatherBox4 =document.querySelector(".weather__box--4");
         const weatherBoxes =document.querySelectorAll(".weather__box");
         const weatherToday = document.querySelector(".weather__today");
-        console.log(responseList);
         weatherToday.innerHTML="";
+       
+        console.log(responseList);
+       
         weatherBoxes.forEach(box=>{
             box.innerHTML="";
         })
-
+        console.log(response);
+        
         for(let i =0; i < responseList.length; i+=8){
             if(i === 0){
+                
                 const timestamp = responseList[i].dt_txt;
                 const cityData = response.city.name;
                 const finalDate = getAllTime(timestamp);
@@ -111,6 +121,8 @@ const bringWeather = (query) => {
                     e.target.currentTime = 0;
                     e.target.play();
                 }, false);
+                console.log("city",cityData, "Date",finalDate, "temp",tempData, "description",descriptionData, "wind",windData, "humidity",humidityData, "cloud",cloudsData, "pressure",pressureData)
+
 
             } 
          
@@ -149,8 +161,10 @@ const bringWeather = (query) => {
                 const subWeather = displayWeather(cityData,finalDate,tempData);
                 weatherBox4.appendChild(subWeather);
             }
-        }
+        }}
+        
     })
+    
 };
 
 
@@ -168,10 +182,11 @@ const bringWeather = (query) => {
  * @param {number} humidity optional
  * @param {number} clouds optional
  * @param {number} pressure optional
- * @returns 
+ * @returns mainDiv which is filled many html tags which are created with this function and mainDiv will
+ * show all the weather-related to contents to user.
  */
 
-const displayWeather = (city, day, temperature, description, wind, humidity, clouds, pressure) => {
+const displayWeather = (city, day, temperature, description, wind, humidity, clouds=0, pressure) => {
     const mainDiv = document.createElement("div");
     const cityTag =  document.createElement("h2");
     const dayTag = document.createElement("h4");
