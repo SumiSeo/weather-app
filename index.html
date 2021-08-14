@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <video autoplay muted loop>
+        <source src="./src/Clouds above a road.mp4" type="video/mp4" />
+      </video>
+      <form class="form">
+        <input
+          placeholder="Today's weather is ..."
+          class="search__input"
+          type="text"
+        />
+      </form>
+      <div class="weather hidden">
+        <div class="weather__column">
+          <div class="weather__today"></div>
+        </div>
+        <div class="weather__column">
+          <div class="weather__box--1 weather__box"></div>
+          <div class="weather__box--2 weather__box"></div>
+          <div class="weather__box--3 weather__box"></div>
+          <div class="weather__box--4 weather__box"></div>
+        </div>
+      </div>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>
