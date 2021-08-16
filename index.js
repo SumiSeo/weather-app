@@ -89,7 +89,6 @@ const bringWeather = (query) => {
         
         for(let i =0; i < responseList.length; i+=8){
             if(i === 0){
-                
                 const timestamp = responseList[i].dt_txt;
                 const cityData = response.city.name;
                 const finalDate = getAllTime(timestamp);
@@ -186,7 +185,7 @@ const bringWeather = (query) => {
  * show all the weather-related to contents to user.
  */
 
-const displayWeather = (city, day, temperature, description, wind, humidity, clouds=0, pressure) => {
+const displayWeather = (city, day, temperature, description, wind, humidity, clouds=0.1, pressure) => {
     const mainDiv = document.createElement("div");
     const cityTag =  document.createElement("h2");
     const dayTag = document.createElement("h4");
@@ -252,13 +251,3 @@ const displayWeather = (city, day, temperature, description, wind, humidity, clo
 
 
 
-/**
- * Things to do
- * 1. shorten get the day, :::::::::done
- * 2. shorten get the month, :::::::::done
- * 3. shorten video handling:::::::::done
- * 4. Add if status code == 200
- * 5. I have to remember!!!!!! if I just persist using if ?!? even though I finished the function that I wanted 
- * poor computer is going to check everything... and it is useless...
- * 
- */
