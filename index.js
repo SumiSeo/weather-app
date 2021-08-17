@@ -94,9 +94,9 @@ const bringWeather = (query) => {
                 const finalDate = getAllTime(timestamp);
                 const tempData = responseList[i].main.temp;
                 const descriptionData = responseList[i].weather[i].description;
-                const windData = (responseList[i].wind.speed === 0) ? "0": responseList[i].wind.speed ;
-                const humidityData =  (responseList[i].main.humidity ===0) ? "0" : responseList[i].main.humidity;
-                const cloudsData = (responseList[i].clouds.all === 0) ? "0" : responseList[i].clouds.all;
+                const windData = (responseList[i].wind.speed === 0) ? "0" : responseList[i].wind.speed ;
+                const humidityData =  (responseList[i].main.humidity ===0) ? "0" : responseList[i].main.humidity ;
+                const cloudsData = (responseList[i].clouds.all === 0) ? "0" : responseList[i].clouds.all ;
                 const pressureData =  (responseList[i].main.pressure ===0) ? "0" : responseList[i].main.pressure ;
                 const mainWeather = displayWeather(cityData, finalDate, tempData, descriptionData, windData, humidityData, cloudsData, pressureData);
                 weatherToday.appendChild(mainWeather);
