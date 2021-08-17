@@ -68,7 +68,7 @@ const bringWeather = (query) => {
     xhr.send(null); //This is for "form" to write params
    
     xhr.addEventListener("readystatechange", () => {
-        if(xhr.status === 200 && xhr.readyState === XMLHttpRequest.DONE) {
+        if(xhr.readyState === XMLHttpRequest.DONE &&  xhr.status === 200 ) {
         const response = JSON.parse(xhr.responseText);
         const responseList = response.list;
         const videoBG = document.querySelector("video source");
@@ -94,13 +94,13 @@ const bringWeather = (query) => {
                 const finalDate = getAllTime(timestamp);
                 const tempData = responseList[i].main.temp;
                 const descriptionData = responseList[i].weather[i].description;
-                const windData = responseList[i].wind.speed;
-                const humidityData =  responseList[i].main.humidity;
-                const cloudsData = responseList[i].clouds.all;
-                const pressureData =  responseList[i].main.pressure;
+                const windData = (responseList[i].wind.speed === 0) ? "0": responseList[i].wind.speed ;
+                const humidityData =  (responseList[i].main.humidity ===0) ? "0" : responseList[i].main.humidity;
+                const cloudsData = (responseList[i].clouds.all === 0) ? "0" : responseList[i].clouds.all;
+                const pressureData =  (responseList[i].main.pressure ===0) ? "0" : responseList[i].main.pressure ;
                 const mainWeather = displayWeather(cityData, finalDate, tempData, descriptionData, windData, humidityData, cloudsData, pressureData);
                 weatherToday.appendChild(mainWeather);
-
+ 
                 videoBG.parentNode.pause();
                 if(descriptionData.includes("rain")){
                     videoBG.setAttribute("src", "./src/rain2.mp4");
@@ -185,7 +185,7 @@ const bringWeather = (query) => {
  * show all the weather-related to contents to user.
  */
 
-const displayWeather = (city, day, temperature, description, wind, humidity, clouds=0.1, pressure) => {
+const displayWeather = (city, day, temperature, description, wind, humidity, clouds, pressure) => {
     const mainDiv = document.createElement("div");
     const cityTag =  document.createElement("h2");
     const dayTag = document.createElement("h4");
@@ -198,7 +198,7 @@ const displayWeather = (city, day, temperature, description, wind, humidity, clo
     const pressureTag = document.createElement("p");
    
     if(city && day && temperature && description && wind && humidity && clouds && pressure){
-
+        //I have to deal with new logic...!!!! 
         cityTag.className="city";
         dayTag.className="day";
         temperatureTag.className="temperature";
