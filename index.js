@@ -21,10 +21,11 @@ input.addEventListener("keypress", function (e) {
 })
 
 /**
- * getTheDay function will receive index number of the day, and then convert to "Exact name of the day"
- * @param {index} day 
- * @returns string(the  name of the day)
+ * convert to "Exact name of the day"
+ * @param {index} day index number of the day
+ * @returns {string} (the  name of the day)
  */
+
 const getTheDay = (day)=>{
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     return days[day];
@@ -33,8 +34,8 @@ const getTheDay = (day)=>{
 
 /**
  * getTheMonth function will receive index number of the month, and then convert to "the name of month"
- * @param {index} dateMonth 
- * @returns string(the name of the month)
+ * @param {index} dateMonth
+ * @returns string the name of the month
  */
 const getTheMonth = (dateMonth )=>{
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct","Nov", "Dec"];
@@ -124,42 +125,30 @@ const bringWeather = (query) => {
 
 
             } 
-         
-            else if(i===8) {
-                //index number 8/ 16/ 24/ 32
-                const cityData = response.city.name;
-                const tempData = responseList[i].main.temp;
-                const timestamp = responseList[i].dt_txt;
-                const finalDate = getAllTime(timestamp);
-                const subWeather = displayWeather(cityData,finalDate,tempData);
-                weatherBox1.appendChild(subWeather);
-            
+            else {
+    
+                    const cityData = response.city.name;
+                    const tempData = responseList[i].main.temp;
+                    const timestamp = responseList[i].dt_txt;
+                    const finalDate = getAllTime(timestamp);
+                    const subWeather = displayWeather(cityData,finalDate,tempData);
+                    if(i===8){
+                        weatherBox1.appendChild(subWeather);
+                    }
+                    if(i===16){
+                        weatherBox2.appendChild(subWeather);
+                    }
+                    if(i===24){
+                        weatherBox3.appendChild(subWeather);
+                    }
+                    if(i===32){
+                        weatherBox4.appendChild(subWeather);
+                    }
+                    
+             
+               
             }
             
-            else if(i===16){
-                const cityData = response.city.name;
-                const tempData = responseList[i].main.temp;
-                const timestamp = responseList[i].dt_txt;
-                const finalDate = getAllTime(timestamp);
-                const subWeather = displayWeather(cityData,finalDate,tempData);
-                weatherBox2.appendChild(subWeather);
-            }
-            else if(i===24){
-                const cityData = response.city.name;
-                const tempData = responseList[i].main.temp;
-                const timestamp = responseList[i].dt_txt;
-                const finalDate = getAllTime(timestamp);
-                const subWeather = displayWeather(cityData,finalDate,tempData);
-                weatherBox3.appendChild(subWeather);
-            }
-            else if(i===32){
-                const cityData = response.city.name;
-                const tempData = responseList[i].main.temp;
-                const timestamp = responseList[i].dt_txt;
-                const finalDate = getAllTime(timestamp);
-                const subWeather = displayWeather(cityData,finalDate,tempData);
-                weatherBox4.appendChild(subWeather);
-            }
         }}
         
     })
@@ -181,7 +170,7 @@ const bringWeather = (query) => {
  * @param {number} humidity optional
  * @param {number} clouds optional
  * @param {number} pressure optional
- * @returns mainDiv which is filled many html tags which are created with this function and mainDiv will
+ * @returns {html element} mainDiv which is filled many html tags which are created with this function and mainDiv will
  * show all the weather-related to contents to user.
  */
 
